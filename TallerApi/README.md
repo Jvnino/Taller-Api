@@ -1,6 +1,7 @@
 # TallerApi
 
 This template should help get you started developing with Vue 3 in Vite.
+https://fakestoreapi.com/docs
 
 ## Recommended IDE Setup
 
