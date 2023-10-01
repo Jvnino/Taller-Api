@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { onMounted, ref } from "vue";
-import { RouterLink } from 'vue-router';
-    
+import { RouterLink, useRoute } from 'vue-router';
+
 const categorias = ref()
 const productos = ref()
 const showMenu = ref(false);
 const toggleMenu = () => {
       showMenu.value = !showMenu.value;
     };
+const route = useRoute()
 
 onMounted(()=>{
     axios.get('https://fakestoreapi.com/products/categories').then(response=>{
@@ -25,58 +26,86 @@ onMounted(()=>{
 </script>
 
 <template>
+    
+    <div class="container">
+        <section class="encabezado">
+            <div>
+              <router-link to="/">Home</router-link>
+            </div>
 
-    <!-- Boton de producto para ver las categorias -->
-    <div>
-        <button @click="toggleMenu">Menú</button>
-        <ul v-if="showMenu">
-            <li v-for="(category, index) in categorias" :key="index">
-                <router-link :to="{ name: 'Categoria', params: { nombre: category } }">{{ category }}</router-link>
-            </li>
-        </ul>
-    </div>
+            <div>
+                <router-link to="/Crud"> CRUD</router-link>
+            </div>
+            <div>
+                <header>FakeStoreAPI</header>
+            </div>
+        </section>
 
-    <!-- Listado de productos -->
-    <div>
-    <h1>Productos</h1>
-    <div class="product-grid">
-      <div v-for="(product, index) in productos" :key="index" class="product-item">
-        <img :src="product.image" alt="Imagen del producto" class="product-image">
-        <p class="product-title">{{ product.title }}</p>
-        <p class="product-price">{{ product.price }} $</p>
+        <!-- Boton de producto para ver las categorias -->
         
-      </div>
+            <section class="contenido">
+                <div>
+                    <button @click="toggleMenu">Menú</button>
+                    <ul v-if="showMenu">
+                        <li v-for="(category, index) in categorias" :key="index">
+                            <router-link :to="{ name: 'Categoria', params: { nombre: category } }">{{ category }}</router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <router-view :key="route.path"> </router-view>
+                </div>
+            </section>       
     </div>
-  </div>
 
 </template>
 
-<style>
+<style scoped>
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #300517; 
+  padding: 10px 20px;
+  color: white;
 }
 
-.product-item {
+.encabezado a {
+  text-decoration: none;
+  color: white;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.encabezado header {
+  font-size: 24px;
+}
+
+.encabezado a.router-link-exact-active {
+  text-decoration: underline;
+}
+
+
+.contenido .content {
+  flex: 1; 
+  padding: 20px; 
   border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
 }
 
-.product-image {
-  max-width: 100%;
-  height: auto;
+.contenido div ul li {
+  list-style-type: none;
+  margin-right: 20px; 
+  display: inline; 
+}
+.contenido div ul li router-link {
+  text-decoration: none;
+  color: white; 
+  font-weight: bold; 
+  transition: color 0.3s ease;
 }
 
-.product-title {
-  font-weight: bold;
+.contenido div ul li router-link:hover {
+  color: #007bff;
 }
-
-.product-price {
-  color: #e91e63;
-  font-weight: bold;
-}
-
 </style>
