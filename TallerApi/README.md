@@ -1,5 +1,9 @@
 # TallerApi
 
+Usuario para Login: mor_231
+Contraseña para Login: 83r5^_
+
+
 This template should help get you started developing with Vue 3 in Vite.
 https://fakestoreapi.com/docs
 

@@ -4,13 +4,13 @@ import axios from 'axios';
 import { onMounted, ref } from "vue";
 import { RouterLink, useRoute } from 'vue-router';
 
-const detalle =ref()
+const detalle = ref()
 const route = useRoute()
 const id = route.params.id
 
-onMounted(()=>{
-    axios.get(`https://fakestoreapi.com/products/${id}`).then(response=>{
-        detalle.value= response.data
+onMounted(() => {
+    axios.get(`https://fakestoreapi.com/products/${id}`).then(response => {
+        detalle.value = response.data
         console.log(detalle.value);
     })
 })
@@ -26,6 +26,4 @@ onMounted(()=>{
     </div>
 </template>
 
-<style>
-
-</style>
+<style></style>
